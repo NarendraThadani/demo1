@@ -18,10 +18,36 @@ public class JobChainer {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "Find Min");
 
+		/*
 		job.setJarByClass(AggregateMin.class);
 		job.setMapperClass(AggregateMin.AggregateMapper.class);
 		//job.setCombinerClass(AggregateMin.AggregateReducer.class);
 		job.setReducerClass(AggregateMin.AggregateReducer.class);
+				
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(Text.class);
+			
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(FloatWritable.class);
+		
+		FileInputFormat.addInputPath(job, new Path(args[1]));
+		// delete intermediate output folder if it already exists
+		FileSystem fs = FileSystem.get(conf);
+		if (fs.exists(new Path(OUTPUT_PATH))) {
+			fs.delete(new Path(OUTPUT_PATH), true);
+		}
+
+		// set the output path of this job
+		FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
+		// wait for the job to finish
+		job.waitForCompletion(true);
+		
+		*/
+		
+		job.setJarByClass(AggregateMinDecade.class);
+		job.setMapperClass(AggregateMinDecade.AggregateMapper.class);
+		//job.setCombinerClass(AggregateMin.AggregateReducer.class);
+		job.setReducerClass(AggregateMinDecade.AggregateReducer.class);
 				
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(Text.class);
